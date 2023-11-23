@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="MAUICHAT.ChatPage" Title="The chat" Shell.FlyoutBehavior="Flyout">
     <Grid Padding="16" RowSpacing="2" ColumnSpacing="2" RowDefinitions="*,*,*,*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*,*,*,*,*" >
         <Editor MaxLength="200  " Style="{StaticResource CommonEditorStyle}" Placeholder="Input text here for message:" ToolTipProperties.Text="Textbox, input your message." SemanticProperties.Description="Text box to write message." Grid.Row="9" Grid.ColumnSpan="8"/>
-        <ImageButton Source="messagesend.png" Clicked="OnSendMessage" HorizontalOptions="Center" VerticalOptions="Center" ToolTipProperties.Text="Button to send your message." SemanticProperties.Description="Button to send message." Grid.Row="9" Grid.Column="9" WidthRequest="48" HeightRequest="48"/>
-        <ImageButton Source="returnimg.png" Clicked="OnReturnMenu" HorizontalOptions="Center" VerticalOptions="Center" ToolTipProperties.Text="Button to return to the menu." SemanticProperties.Description="Button to go back to the menu." Grid.Row="0" Grid.Column="0" WidthRequest="48" HeightRequest="48"/>
+        <ImageButton Source="messagesend.png" Clicked="OnSendMessage" HorizontalOptions="Center" VerticalOptions="Center" ToolTipProperties.Text="Button to send your message." SemanticProperties.Description="Button to send message." Grid.Row="9" Grid.Column="9" WidthRequest="48" HeightRequest="48" Scale="1"/>
+        <ImageButton Source="returnimg.png" Clicked="OnReturnMenu" HorizontalOptions="Center" VerticalOptions="Center" ToolTipProperties.Text="Button to return to the menu." SemanticProperties.Description="Button to go back to the menu." Grid.Row="0" Grid.Column="0" WidthRequest="48" HeightRequest="48" Scale="1"/>
     </Grid>
 </ContentPage>
