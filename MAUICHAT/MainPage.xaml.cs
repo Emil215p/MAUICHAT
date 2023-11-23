@@ -29,6 +29,10 @@
             {
                 CounterBtn.Text = $"If you dont stop it, i will. :D ({count})";
             }
+            if (count == 666)
+            {
+                CounterBtn.Text = $"If you dont stop it, i will. >:( ({count})";
+            }
             if (count == 1000)
             {
                 CounterBtn.Text = $":DDDD";
@@ -41,8 +45,8 @@
         }
         private void OnChatClicked(object sender, EventArgs e)
         {
-
+            App.Current.MainPage = new NavigationPage(new ChatPage());
         }
-        }
+    }
 
 }

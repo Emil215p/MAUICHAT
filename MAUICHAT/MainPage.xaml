@@ -35,11 +35,12 @@
             
             <Button
                 x:Name="ChatBtn"
-                Text="Send messages :)" 
+                Text="Go to the chat" 
                 SemanticProperties.Hint="Send more messages :)"
                 Clicked="OnChatClicked"
                 HorizontalOptions="Fill"
-                ToolTipProperties.Text="To send messages, but you cant really do that."/>
+                ToolTipProperties.Text="Button to go to the chat."
+                SemanticProperties.Description="Button to go to the chat."/>
         </VerticalStackLayout>
     </ScrollView>
 
