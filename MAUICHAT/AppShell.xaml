@@ -6,9 +6,9 @@
    xmlns:local="clr-namespace:MAUICHAT"
    Shell.FlyoutBehavior="Disabled">
  
-    <!--As the flyout bar has been disabled, this code is no longer relevant, if you want to use the flyout bar, change "Disabled" to "Flyout" and uncomment the shellcontent code.
+    <!--As the flyout bar has been disabled, this code is no longer relevant, if you want to use the flyout bar, change "Disabled" to "Flyout".
     The flyout bar is however not working very well and wont be fixed.-->
-    <!--<ShellContent
+    <ShellContent
      Title="Start page"
      ContentTemplate="{DataTemplate local:MainPage}"
      Route="MainPage" />
@@ -16,6 +16,6 @@
     <ShellContent
      Title="Chat"
      ContentTemplate="{DataTemplate local:ChatPage}"
-     Route="AddPage" />-->
+     Route="AddPage" />
 
 </Shell>
