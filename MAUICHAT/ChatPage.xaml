@@ -1,8 +1,70 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="MAUICHAT.ChatPage" Title="The chat" Shell.FlyoutBehavior="Flyout">
-    <Grid Padding="16" RowSpacing="2" ColumnSpacing="2" RowDefinitions="*,*,*,*,*,*,*,*,*" ColumnDefinitions="*,*,*,*,*,*,*,*,*" >
-        <Editor MaxLength="200  " Style="{StaticResource CommonEditorStyle}" Placeholder="Input text here for message:" ToolTipProperties.Text="Textbox, input your message." SemanticProperties.Description="Text box to write message." Grid.Row="9" Grid.ColumnSpan="8"/>
-        <ImageButton Source="messagesend.png" Clicked="OnSendMessage" HorizontalOptions="Center" VerticalOptions="Center" ToolTipProperties.Text="Button to send your message." SemanticProperties.Description="Button to send message." Grid.Row="9" Grid.Column="9" Scale="1"/>
-        <ImageButton Source="returnimg.png" Clicked="OnReturnMenu" HorizontalOptions="Center" VerticalOptions="Center" ToolTipProperties.Text="Button to return to the menu." SemanticProperties.Description="Button to go back to the menu." Grid.Row="0" Grid.Column="0"  />
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MAUICHAT.ChatPage"
+    Title="The chat">
+
+    <Grid
+        Padding="16"
+        RowSpacing="0"
+        ColumnSpacing="0"
+        ColumnDefinitions="*,*,*">
+
+        <StackLayout Grid.Column="0" Margin="40,0,0,0">
+           
+            <Editor 
+            MaxLength="200"
+            Placeholder="Input text here for message:"
+            ToolTipProperties.Text="Textbox, input your message."
+            SemanticProperties.Description="Text box to write message."/>
+
+        <ImageButton
+            Source="returnimg.png"
+            Clicked="OnReturnMenu"
+            HorizontalOptions="Start"
+            VerticalOptions="Center"
+            ToolTipProperties.Text="Button to return to the menu."
+            SemanticProperties.Description="Button to go back to the menu."
+            Scale="0.5"/>
+
+        <Border
+            Stroke="#C49B33"
+            StrokeThickness="4"
+            StrokeShape="RoundRectangle 25,25,25,25"
+            Background="#2B0B98"
+            Padding="16,8"
+            Grid.Row="1"
+            HorizontalOptions="Center">
+            <Label
+           Text=".NET MAUI"
+           x:Name="TextBuble"
+           TextColor="White"
+           FontSize="18"
+           FontAttributes="Bold"
+           VerticalTextAlignment="Center"
+           HorizontalTextAlignment="Center"/>
+        </Border>
+        </StackLayout>
+        <ImageButton
+            Source="messagesend.png"
+            Clicked="OnSendMessage"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            ToolTipProperties.Text="Button to send your message."
+            SemanticProperties.Description="Button to send message."
+            Grid.Column="1"
+            Scale="0.5"/>
+        
+        <ImageButton
+            Source="attachmedia.png"
+            Clicked="OnAttachMedia"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            ToolTipProperties.Text="Button to go attach media."
+            SemanticProperties.Description="Button to go attach media."
+            Grid.Column="2"
+            Scale="0.5"/>
+       
     </Grid>
-</ContentPage>
+</ContentPage>  
