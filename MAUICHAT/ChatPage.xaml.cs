@@ -2,7 +2,7 @@ namespace MAUICHAT;
 
 public partial class ChatPage : ContentPage
 {
-    public async Task<FileResult> PickAndShow(PickOptions options)
+    public async Task<FileResult?> PickAndShow(PickOptions options)
     {
         try
         {
@@ -16,12 +16,16 @@ public partial class ChatPage : ContentPage
                     var image = ImageSource.FromStream(() => stream);
                 }
             }
-
-            return result;
+            if (result != null)
+            {
+                return result;
+            }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            // The user canceled or something went wrong
+            // The user cancelled or something went wrong
+            await DisplayAlert("Alert", "Action cancelled", "OK");
+
         }
 
         return null;
@@ -43,6 +47,9 @@ public partial class ChatPage : ContentPage
 
     private void OnReturnMenu(object sender, EventArgs e)
     {
-        App.Current.MainPage = new NavigationPage(new MainPage());
+        if (Application.Current != null)
+        {
+            Application.Current.MainPage = new NavigationPage(new MainPage());
+        }
     }
 }

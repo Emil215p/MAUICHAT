@@ -6,22 +6,12 @@
     Title="The chat">
 
     <Grid
-        Padding="16"
+        Padding="8"
         RowSpacing="0"
         ColumnSpacing="0"
-        ColumnDefinitions="8*,0.5*,0.5*">
+        RowDefinitions="*,150">
 
-        <StackLayout Grid.Column="0" Margin="0,0,0,0">
-
-            <ImageButton
-            Source="returnimg.png"
-            Clicked="OnReturnMenu"
-            HorizontalOptions="Start"
-            VerticalOptions="Start"
-            ToolTipProperties.Text="Button to return to the menu."
-            SemanticProperties.Description="Button to go back to the menu."
-            MaximumHeightRequest="20"
-            Scale="0.5"/>
+        <StackLayout Grid.Column="0">
 
             <Border
             Stroke="#C49B33"
@@ -40,38 +30,53 @@
            VerticalTextAlignment="Center"
            HorizontalTextAlignment="Center"/>
             </Border>
-
+        </StackLayout>
+        <Grid Grid.Row="0">
+            <ImageButton
+            Source="returnimg.png"
+            Clicked="OnReturnMenu"
+            HorizontalOptions="Start"   
+            VerticalOptions="Start"
+            ToolTipProperties.Text="Button to return to the menu."
+            SemanticProperties.Description="Button to go back to the menu."
+            HeightRequest="55"
+            WidthRequest="55"
+            Scale="0.5"/>
+        </Grid>
+        <Grid Grid.Row="1" ColumnDefinitions="*,50">
             <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Always" VerticalOptions="EndAndExpand">
-                <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                    <Editor 
+                
+                <Editor 
             Placeholder="Input text here for message:"
             ToolTipProperties.Text="Textbox, input your message."
             SemanticProperties.Description="Text box to write message." 
-            VerticalOptions="EndAndExpand"
+            VerticalOptions="End"
             HorizontalOptions="Fill"
             HeightRequest="100"/>
-                </StackLayout>
             </ScrollView>
-        </StackLayout>
+            <Grid Grid.Column="1" RowDefinitions="*,*">
 
-        <StackLayout Grid.Column="1" Margin="0,0,0,0">
-            <ImageButton
+                <ImageButton
             Source="messagesend.png"
             Clicked="OnSendMessage"
             ToolTipProperties.Text="Button to send your message."
             SemanticProperties.Description="Button to send message."
-            Scale="0.5"
-            VerticalOptions="EndAndExpand"/>
-        </StackLayout>
-        
-        <StackLayout Grid.Column="2" Margin="0,0,0,0">
-            <ImageButton
+            Scale="0.7"
+            Grid.Row="0"
+            HeightRequest="55"
+            VerticalOptions="End"/>
+
+
+                <ImageButton
             Source="attachmedia.png"
             Clicked="OnAttachMedia"
             ToolTipProperties.Text="Button to go attach media."
             SemanticProperties.Description="Button to go attach media."
-            Scale="0.5"
-            VerticalOptions="EndAndExpand"/>
-        </StackLayout>
+            Scale="0.7"
+            Grid.Row="1"
+            HeightRequest="55"
+            VerticalOptions="End"/>
+            </Grid>
+        </Grid>
     </Grid>
-</ContentPage>  
+</ContentPage>

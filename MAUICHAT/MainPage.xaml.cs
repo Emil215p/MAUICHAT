@@ -27,7 +27,7 @@
             }
             if (count >= 500 && count! < 1000)
             {
-                CounterBtn.Text = $"If you dont stop it, i will. :D ({count})";
+                CounterBtn.Text = $"Please stop :( ({count})";
             }
             if (count == 666)
             {
@@ -40,12 +40,15 @@
             if (count == 1001)
             {
                 SemanticScreenReader.Announce(CounterBtn.Text);
-                Application.Current.Quit();
+                System.Environment.Exit(0);
             }
         }
         private void OnChatClicked(object sender, EventArgs e)
         {
-            App.Current.MainPage = new NavigationPage(new ChatPage());
+            if (Application.Current != null)
+            {
+                Application.Current.MainPage = new NavigationPage(new ChatPage());
+            }
         }
     }
 
