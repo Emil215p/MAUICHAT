@@ -2,7 +2,7 @@
 //using MySqlConnector;
 //using var connection = new MySqlConnection();
 ////connection.ConnectionString = "Server=localhost;User ID=root;Database=test"; //XAMPP connection
-//connection.ConnectionString = "Server=localhost;Port=2222;User ID=emko01_skp-dp_sde_dk;Password=pqk5235q;Database=emko01_skp_dp_sde_dk"; //SDE connection
+//connection.ConnectionString = ""; //connection to server
 //await connection.OpenAsync();
 
 //using var command = new MySqlCommand("SELECT name FROM table;", connection);
