@@ -41,24 +41,11 @@ public partial class ChatPage : ContentPage
 
     private async void OnSendMessage(object sender, EventArgs e)
     {
-        if (DeviceInfo.Platform == DevicePlatform.Android)
-        {
-            var handler = new HttpClientHandler(); handler.ServerCertificateCustomValidationCallback =
-            (message, certificate, chain, sslPolicyErrors) => true;
-            var client = new HttpClient(new Xamarin.Android.Net.AndroidMessageHandler());
-            var data = new { username = "Emil", message = "Heello" }; // Data to send, use for testing.
-            var json = JsonSerializer.Serialize(data); // Make the data Jason
-            var content = new StringContent(json, Encoding.UTF8, "application/json"); // More Jason stuff
-            await client.PostAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php", content); // Post the data, declare API url
-        }
-        else
-        {
             var client = new HttpClient();
             var data = new { username = "Emil", message = "Heello" }; // Data to send, use for testing.
             var json = JsonSerializer.Serialize(data); // Make the data Jason
             var content = new StringContent(json, Encoding.UTF8, "application/json"); // More Jason stuff
             await client.PostAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php", content); // Post the data, declare API url
-        }
     }
     private async void OnAttachMedia(object sender, EventArgs e)
     {
