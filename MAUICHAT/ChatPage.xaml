@@ -42,11 +42,24 @@
             HeightRequest="55"
             WidthRequest="55"
             Scale="0.5"/>
+            <Entry 
+            Text="{Binding NameContent}"
+            x:Name="namebox"
+            Placeholder="Click to pick a username:"
+            ToolTipProperties.Text="Textbox, input your name."
+            SemanticProperties.Description="Text box to write your name in."
+            HeightRequest="55"
+            WidthRequest="200"
+            VerticalOptions="Start"
+            HorizontalOptions="Start"
+            Margin="55,0,0,0"/>
         </Grid>
         <Grid Grid.Row="1" ColumnDefinitions="*,50">
             <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Always" VerticalOptions="EndAndExpand">
                 
                 <Editor 
+            Text="{Binding EditorContent}"
+            x:Name="editor"
             Placeholder="Input text here for message:"
             ToolTipProperties.Text="Textbox, input your message."
             SemanticProperties.Description="Text box to write message." 
