@@ -9,28 +9,22 @@
         Padding="8"
         RowSpacing="0"
         ColumnSpacing="0"
-        RowDefinitions="*,150">
-
-        <StackLayout Grid.Column="0">
-
-            <Border
-            Stroke="#C49B33"
-            StrokeThickness="4"
-            StrokeShape="RoundRectangle 25,25,25,25"
-            Background="#2B0B98"
-            Padding="16,8"
-            Grid.Row="1"
-            HorizontalOptions="Center">
-                <Label
-           Text=".NET MAUI"
-           x:Name="TextBubble"
-           TextColor="White"
-           FontSize="18"
-           FontAttributes="Bold"
-           VerticalTextAlignment="Center"
-           HorizontalTextAlignment="Center"/>
-            </Border>
-        </StackLayout>
+        RowDefinitions="55, *,150">
+        <ScrollView x:Name="scrollView"
+                    Grid.Row="1"
+                    VerticalOptions="Fill"
+                    Margin="15, 0, 15 ,0"
+                    Scrolled="OnScrollViewScrolled">
+            <StackLayout>
+                <CollectionView ItemsSource="{Binding YourArray}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
         <Grid Grid.Row="0">
             <ImageButton
             Source="returnimg.png"
@@ -54,7 +48,7 @@
             HorizontalOptions="Start"
             Margin="55,0,0,0"/>
         </Grid>
-        <Grid Grid.Row="1" ColumnDefinitions="*,50">
+        <Grid Grid.Row="2" ColumnDefinitions="*,50">
             <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Always" VerticalOptions="EndAndExpand">
                 
                 <Editor 
@@ -86,7 +80,7 @@
             ToolTipProperties.Text="Button to go attach media."
             SemanticProperties.Description="Button to go attach media."
             Scale="0.7"
-            Grid.Row="1"
+            Grid.Row="2"
             HeightRequest="55"
             VerticalOptions="End"/>
             </Grid>

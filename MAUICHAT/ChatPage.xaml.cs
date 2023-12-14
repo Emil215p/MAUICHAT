@@ -3,6 +3,7 @@ using System.Text;
 using System.Net.Http;
 using Microsoft.Maui.Controls;
 using System.ComponentModel;
+using Newtonsoft.Json;
 namespace MAUICHAT;
 
 public partial class ChatPage : ContentPage
@@ -80,18 +81,26 @@ public partial class ChatPage : ContentPage
     }
     private async void OnSendMessage(object sender, EventArgs e)
     {
-            string user = namebox.Text;
-            string? imageload = null;
-            string? editorcontent = editor.Text;
-            var client = new HttpClient();
-            var data = new { username = user, message = editorcontent, image = imageload}; // Data to send, use for testing.
-            var json = JsonSerializer.Serialize(data); // Make the data Jason
-            var content = new StringContent(json, Encoding.UTF8, "application/json"); // More Jason stuff
-            await client.PostAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php", content); // Post the data, declare API url
+        string user = namebox.Text;
+        string? imageload = null;
+        string? editorcontent = editor.Text;
+        var client = new HttpClient();
+        var data = new { username = user, message = editorcontent, image = imageload }; // Data to send
+        var json = JsonConvert.SerializeObject(data); // Make the data Jason
+        var content = new StringContent(json, Encoding.UTF8, "application/json"); // More Jason stuff
+        await client.PostAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php", content); // Post the data, declare API url
+        editor.Text = ""; // Clear the editor
+    }
+    public async void OnGetMessage()
+    {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php"); // get the data, declare API url
+            string content = await response.Content.ReadAsStringAsync(); // Get the content of the response
+            Messages[] Messages; JsonConvert.PopulateObject(content, Messages);
     }
     private async void OnAttachMedia(object sender, EventArgs e)
     {
-        await PickAndShow(PickOptions.Default);
+        await PickAndShow(PickOptions.Default); // Pick the file
     }
 
     private void OnReturnMenu(object sender, EventArgs e)
@@ -100,5 +109,9 @@ public partial class ChatPage : ContentPage
         {
             Application.Current.MainPage = new NavigationPage(new MainPage());
         }
+    }
+    void OnScrollViewScrolled(object sender, ScrolledEventArgs e)
+    {
+        Console.WriteLine($"ScrollX: {e.ScrollX}, ScrollY: {e.ScrollY}");
     }
 }
