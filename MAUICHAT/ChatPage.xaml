@@ -16,10 +16,10 @@
                     Margin="15, 0, 15 ,0"
                     Scrolled="OnScrollViewScrolled">
             <StackLayout>
-                <CollectionView ItemsSource="{Binding YourArray}">
+                <CollectionView ItemsSource="{Binding Message1}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Label Text="{Binding}" />
+                            <Label Text="{Binding UserName}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

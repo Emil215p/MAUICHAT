@@ -4,6 +4,8 @@ using System.Net.Http;
 using Microsoft.Maui.Controls;
 using System.ComponentModel;
 using Newtonsoft.Json;
+using System.Timers;
+using System.Dynamic;
 namespace MAUICHAT;
 
 public partial class ChatPage : ContentPage
@@ -74,10 +76,22 @@ public partial class ChatPage : ContentPage
 
         return null;
     }
-
+    private static void OnTimedMessage(object source, ElapsedEventArgs e)
+    {
+        OnGetMessage();
+    }
     public ChatPage()
     {
         InitializeComponent();
+        System.Timers.Timer timer = new(1000);
+        timer.Elapsed += new ElapsedEventHandler(OnTimedMessage);
+        timer.Interval = 1000;
+        timer.Enabled = true;
+
+        while (true)
+        {
+            Thread.Sleep(1000);
+        }
     }
     private async void OnSendMessage(object sender, EventArgs e)
     {
@@ -91,12 +105,24 @@ public partial class ChatPage : ContentPage
         await client.PostAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php", content); // Post the data, declare API url
         editor.Text = ""; // Clear the editor
     }
-    public async void OnGetMessage()
+    public class Messages
     {
-            HttpClient client = new HttpClient();
+        [JsonProperty("id")]
+        public int Id { get; set; }
+        [JsonProperty("username")]
+        public string? Username { get; set; }
+        [JsonProperty("message")]
+        public string? Message { get; set; }
+        [JsonProperty("image")]
+        public string? Image { get; set; }
+    }
+
+    public static async void OnGetMessage()
+    {
+            HttpClient client = new();
             HttpResponseMessage response = await client.GetAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php"); // get the data, declare API url
             string content = await response.Content.ReadAsStringAsync(); // Get the content of the response
-            Messages[] Messages; JsonConvert.PopulateObject(content, Messages);
+        _ = JsonConvert.DeserializeObject<Messages[]>(content);
     }
     private async void OnAttachMedia(object sender, EventArgs e)
     {
@@ -114,4 +140,5 @@ public partial class ChatPage : ContentPage
     {
         Console.WriteLine($"ScrollX: {e.ScrollX}, ScrollY: {e.ScrollY}");
     }
+    public Messages[]? Message1 { get; private set; }
 }
