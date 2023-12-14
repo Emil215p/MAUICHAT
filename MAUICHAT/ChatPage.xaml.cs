@@ -25,6 +25,7 @@ public partial class ChatPage : ContentPage
                 }
             }
         }
+        public Messages[]? Message1 { get; private set; }
         private string? _nameContent;
         public string? NameContent
         {
@@ -83,15 +84,10 @@ public partial class ChatPage : ContentPage
     public ChatPage()
     {
         InitializeComponent();
-        System.Timers.Timer timer = new(1000);
+        System.Timers.Timer timer = new();
         timer.Elapsed += new ElapsedEventHandler(OnTimedMessage);
         timer.Interval = 1000;
         timer.Enabled = true;
-
-        while (true)
-        {
-            Thread.Sleep(1000);
-        }
     }
     private async void OnSendMessage(object sender, EventArgs e)
     {
@@ -140,5 +136,4 @@ public partial class ChatPage : ContentPage
     {
         Console.WriteLine($"ScrollX: {e.ScrollX}, ScrollY: {e.ScrollY}");
     }
-    public Messages[]? Message1 { get; private set; }
 }
