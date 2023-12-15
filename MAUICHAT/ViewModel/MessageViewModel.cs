@@ -54,6 +54,19 @@ namespace MAUICHAT
             }
         }
 
+        public async void SetMessage(string user, string editorcontent, string imageload)
+        {
+            var client = new HttpClient();
+            var data = new { username = user, message = editorcontent, image = imageload }; // Data to send
+            var json = JsonConvert.SerializeObject(data); // Make the data Jason
+            var content = new StringContent(json, Encoding.UTF8, "application/json"); // More Jason stuff
+            await client.PostAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php", content); // Post the data, declare API url
+
+            // add to temp list, which show the use that their message has been sent
+            // then when message is recived in GetMessage remove it from this list
+        }
+
+
         private async void OnTimedMessage(object source, ElapsedEventArgs e)
         {
             GetMessages();

@@ -12,18 +12,15 @@ namespace MAUICHAT;
 
 public partial class ChatPage : ContentPage
 {
+
+    ChatPageViewModel ViewModel = new ChatPageViewModel();
+
     public ChatPage()
     {
         InitializeComponent();
 
-        // DefaultViewModel.Messages.CollectionChanged += OnMessageUpdate();
-
-        BindingContext = new MyViewModel();
+        BindingContext = ViewModel;
     }
-
-    
-
-    
 
     public async Task<FileResult?> PickAndShow(PickOptions options)
     {
@@ -58,20 +55,12 @@ public partial class ChatPage : ContentPage
         string user = namebox.Text;
         string? imageload = null;
         string? editorcontent = editor.Text;
-        var client = new HttpClient();
-        var data = new { username = user, message = editorcontent, image = imageload }; // Data to send
-        var json = JsonConvert.SerializeObject(data); // Make the data Jason
-        var content = new StringContent(json, Encoding.UTF8, "application/json"); // More Jason stuff
-        await client.PostAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php", content); // Post the data, declare API url
-        editor.Text = ""; // Clear the editor
+
+        ViewModel.messageViewModel.SetMessage(user, imageload, editorcontent);
+        
+        editor.Text = string.Empty; // Clear the editor
     }
-    public static async void GetMessages()
-    {
-            HttpClient client = new();
-            HttpResponseMessage response = await client.GetAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php"); // get the data, declare API url
-            string content = await response.Content.ReadAsStringAsync(); // Get the content of the response
-        _ = JsonConvert.DeserializeObject<Message[]>(content);
-    }
+
     private async void OnAttachMedia(object sender, EventArgs e)
     {
         await PickAndShow(PickOptions.Default); // Pick the file
@@ -89,50 +78,3 @@ public partial class ChatPage : ContentPage
     }
 }
 
-public class MyViewModel : INotifyPropertyChanged
-    {
-        #region
-        public MessageViewModel messageViewModel { get; } = new MessageViewModel();
-        #endregion
-
-        #region editor
-        private string? _editorContent;
-        public string? EditorContent
-        {
-            get { return _editorContent; }
-            set
-            {
-                if (_editorContent != value)
-                {
-                    _editorContent = value;
-                    OnPropertyChanged(nameof(EditorContent));
-                }
-            }
-        }
-        #endregion
-
-        #region nameContent
-        private string? _nameContent;
-        public string? NameContent
-        {
-            get { return _nameContent; }
-            set
-            {
-                if (_nameContent != value)
-                {
-                    _nameContent = value;
-                    OnPropertyChanged(nameof(NameContent));
-                }
-            }
-        }
-        #endregion
-
-        #region PropertyChanged
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
-    }
