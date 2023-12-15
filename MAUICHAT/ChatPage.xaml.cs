@@ -13,7 +13,7 @@ namespace MAUICHAT;
 public partial class ChatPage : ContentPage
 {
 
-    ChatPageViewModel ViewModel = new ChatPageViewModel();
+    readonly ChatPageViewModel ViewModel = new();
 
     public ChatPage()
     {
