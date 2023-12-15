@@ -11,11 +11,11 @@ namespace MAUICHAT
 {
     public class MessageViewModel
     {
-        public ObservableCollection<Message> Messages { get; set; } = new ObservableCollection<Message>();
+        public ObservableCollection<Message> Messages { get; set; } = [];
         
-        public Dictionary<int, Message> MessagesReflection { get; set; } = new Dictionary<int, Message>();
+        public Dictionary<int, Message> MessagesReflection { get; set; } = [];
 
-        public ObservableCollection<Message> PendingMessages { get; set; } = new ObservableCollection<Message>();
+        public ObservableCollection<Message> PendingMessages { get; set; } = [];
 
 
         // should move some message logic here
@@ -57,9 +57,8 @@ namespace MAUICHAT
             
             foreach (var item in values)
             {
-                if (!MessagesReflection.ContainsKey(item.Id))
+                if (MessagesReflection.TryAdd(item.Id, item))
                 {
-                    MessagesReflection.Add(item.Id, item);
                     Messages.Add(item);
                 }
             }
@@ -83,7 +82,7 @@ namespace MAUICHAT
                 });
 
             // add to temp list, which show the use that their message has been sent
-            // then when message is recived in GetMessage remove it from this list
+            // then when message is received in GetMessage remove it from this list
         }
 
 
