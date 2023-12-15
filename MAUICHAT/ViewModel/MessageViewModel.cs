@@ -15,6 +15,7 @@ namespace MAUICHAT
         
         public Dictionary<int, Message> MessagesReflection { get; set; } = new Dictionary<int, Message>();
 
+        public ObservableCollection<Message> PendingMessages { get; set; } = new ObservableCollection<Message>();
 
 
         // should move some message logic here
@@ -28,6 +29,17 @@ namespace MAUICHAT
             timer.Interval = 10000;
             timer.Enabled = true;
 
+            Messages.CollectionChanged += Messages_CollectionChanged;
+
+        }
+
+        private void Messages_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                // this is a hack
+                PendingMessages.Clear();
+            }
         }
 
         public async void GetMessages()
@@ -61,6 +73,15 @@ namespace MAUICHAT
             var json = JsonConvert.SerializeObject(data); // Make the data Jason
             var content = new StringContent(json, Encoding.UTF8, "application/json"); // More Jason stuff
             await client.PostAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php", content); // Post the data, declare API url
+
+            PendingMessages.Add(
+                new Message
+                {
+                    Content = editorcontent,
+                    Image = imageload,
+                    Username = user
+
+                });
 
             // add to temp list, which show the use that their message has been sent
             // then when message is recived in GetMessage remove it from this list

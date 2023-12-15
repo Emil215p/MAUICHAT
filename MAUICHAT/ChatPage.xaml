@@ -16,7 +16,8 @@
                     Margin="15, 0, 15 ,0"
                     Scrolled="OnScrollViewScrolled">
             <StackLayout x:Name="MessageBox">
-                <CollectionView ItemsSource="{Binding messageViewModel.Messages}">
+                
+                <CollectionView x:Name="MessageHistory" ItemsSource="{Binding messageViewModel.Messages}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -37,6 +38,30 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+
+                <Label Text="--- Pending ---" FontAttributes="Bold" HorizontalOptions="Center"/>
+                <CollectionView ItemsSource="{Binding messageViewModel.PendingMessages}" BackgroundColor="Transparent">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="1"
+               Text="{Binding Username}"
+               FontAttributes="Bold" />
+                                <Label Grid.Row="1"
+               Grid.Column="2" Text="{Binding Content}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                
             </StackLayout>
         </ScrollView>
         <Grid Grid.Row="0">

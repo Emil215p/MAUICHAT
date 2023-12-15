@@ -52,6 +52,8 @@ public partial class ChatPage : ContentPage
     }
     private async void OnSendMessage(object sender, EventArgs e)
     {
+        await scrollView.ScrollToAsync(0, 0, false);
+
         string user = namebox.Text;
         string? imageload = null;
         string? editorcontent = editor.Text;
