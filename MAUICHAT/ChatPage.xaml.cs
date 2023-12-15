@@ -55,9 +55,8 @@ public partial class ChatPage : ContentPage
         string user = namebox.Text;
         string? imageload = null;
         string? editorcontent = editor.Text;
-
-        ViewModel.messageViewModel.SetMessage(user, imageload, editorcontent);
-        
+        await ViewModel.messageViewModel.SetMessage(user, editorcontent, imageload);
+        await DisplayAlert("Alert", "Message Sent ", "OK");
         editor.Text = string.Empty; // Clear the editor
     }
 

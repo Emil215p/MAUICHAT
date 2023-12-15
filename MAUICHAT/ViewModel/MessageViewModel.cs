@@ -54,7 +54,7 @@ namespace MAUICHAT
             }
         }
 
-        public async void SetMessage(string user, string editorcontent, string imageload)
+        public async Task SetMessage(string user, string editorcontent, string imageload)
         {
             var client = new HttpClient();
             var data = new { username = user, message = editorcontent, image = imageload }; // Data to send
