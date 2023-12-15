@@ -6,48 +6,24 @@ using System.ComponentModel;
 using Newtonsoft.Json;
 using System.Timers;
 using System.Dynamic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 namespace MAUICHAT;
 
 public partial class ChatPage : ContentPage
 {
-    public class MyViewModel : INotifyPropertyChanged
+    public ChatPage()
     {
-        private string? _editorContent;
-        public string? EditorContent
-        {
-            get { return _editorContent; }
-            set
-            {
-                if (_editorContent != value)
-                {
-                    _editorContent = value;
-                    OnPropertyChanged(nameof(EditorContent));
-                }
-            }
-        }
-        public Messages[]? Message1 { get; private set; }
-        private string? _nameContent;
-        public string? NameContent
-        {
-            get { return _nameContent; }
-            set
-            {
-                if (_nameContent != value)
-                {
-                    _nameContent = value;
-                    OnPropertyChanged(nameof(NameContent));
-                }
-            }
-        }
+        InitializeComponent();
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        // DefaultViewModel.Messages.CollectionChanged += OnMessageUpdate();
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        BindingContext = new MyViewModel();
     }
 
+    
+
+    
 
     public async Task<FileResult?> PickAndShow(PickOptions options)
     {
@@ -77,18 +53,6 @@ public partial class ChatPage : ContentPage
 
         return null;
     }
-    private static void OnTimedMessage(object source, ElapsedEventArgs e)
-    {
-        OnGetMessage();
-    }
-    public ChatPage()
-    {
-        InitializeComponent();
-        System.Timers.Timer timer = new();
-        timer.Elapsed += new ElapsedEventHandler(OnTimedMessage);
-        timer.Interval = 1000;
-        timer.Enabled = true;
-    }
     private async void OnSendMessage(object sender, EventArgs e)
     {
         string user = namebox.Text;
@@ -101,30 +65,17 @@ public partial class ChatPage : ContentPage
         await client.PostAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php", content); // Post the data, declare API url
         editor.Text = ""; // Clear the editor
     }
-    public class Messages
-    {
-        [JsonProperty("id")]
-        public int Id { get; set; }
-        [JsonProperty("username")]
-        public string? Username { get; set; }
-        [JsonProperty("message")]
-        public string? Message { get; set; }
-        [JsonProperty("image")]
-        public string? Image { get; set; }
-    }
-
-    public static async void OnGetMessage()
+    public static async void GetMessages()
     {
             HttpClient client = new();
             HttpResponseMessage response = await client.GetAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php"); // get the data, declare API url
             string content = await response.Content.ReadAsStringAsync(); // Get the content of the response
-        _ = JsonConvert.DeserializeObject<Messages[]>(content);
+        _ = JsonConvert.DeserializeObject<Message[]>(content);
     }
     private async void OnAttachMedia(object sender, EventArgs e)
     {
         await PickAndShow(PickOptions.Default); // Pick the file
     }
-
     private void OnReturnMenu(object sender, EventArgs e)
     {
         if (Application.Current != null)
@@ -137,3 +88,51 @@ public partial class ChatPage : ContentPage
         Console.WriteLine($"ScrollX: {e.ScrollX}, ScrollY: {e.ScrollY}");
     }
 }
+
+public class MyViewModel : INotifyPropertyChanged
+    {
+        #region
+        public MessageViewModel messageViewModel { get; } = new MessageViewModel();
+        #endregion
+
+        #region editor
+        private string? _editorContent;
+        public string? EditorContent
+        {
+            get { return _editorContent; }
+            set
+            {
+                if (_editorContent != value)
+                {
+                    _editorContent = value;
+                    OnPropertyChanged(nameof(EditorContent));
+                }
+            }
+        }
+        #endregion
+
+        #region nameContent
+        private string? _nameContent;
+        public string? NameContent
+        {
+            get { return _nameContent; }
+            set
+            {
+                if (_nameContent != value)
+                {
+                    _nameContent = value;
+                    OnPropertyChanged(nameof(NameContent));
+                }
+            }
+        }
+        #endregion
+
+        #region PropertyChanged
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+    }

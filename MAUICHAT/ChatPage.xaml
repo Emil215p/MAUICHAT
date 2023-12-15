@@ -15,11 +15,25 @@
                     VerticalOptions="Fill"
                     Margin="15, 0, 15 ,0"
                     Scrolled="OnScrollViewScrolled">
-            <StackLayout>
-                <CollectionView ItemsSource="{Binding Message1}">
+            <StackLayout x:Name="MessageBox">
+                <CollectionView ItemsSource="{Binding messageViewModel.Messages}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Label Text="{Binding UserName}" />
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="1"
+                               Text="{Binding Username}"
+                               FontAttributes="Bold" />
+                                <Label Grid.Row="1"
+                               Grid.Column="2" Text="{Binding Content}" />
+                            </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
