@@ -25,12 +25,17 @@ namespace MAUICHAT
             GetMessages();
 
             System.Timers.Timer timer = new();
-            timer.Elapsed += new ElapsedEventHandler(OnTimedMessage);
+            timer.Elapsed += OnTimedMessage;
             timer.Interval = 10000;
             timer.Enabled = true;
 
             Messages.CollectionChanged += Messages_CollectionChanged;
 
+        }
+
+        private void OnTimedMessage(object? sender, ElapsedEventArgs e)
+        {
+            GetMessages();
         }
 
         private void Messages_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -47,13 +52,7 @@ namespace MAUICHAT
             HttpClient client = new();
             HttpResponseMessage response = await client.GetAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php"); // get the data, declare API url
             string content = await response.Content.ReadAsStringAsync(); // Get the content of the response
-            var values = JsonConvert.DeserializeObject<Message[]>(content);
-
-            if (values == null)
-            {
-                throw new Exception("No messages exist");
-            }
-
+            var values = JsonConvert.DeserializeObject<Message[]>(content) ?? throw new Exception("No Messages");
 
             
             foreach (var item in values)
@@ -66,10 +65,10 @@ namespace MAUICHAT
             }
         }
 
-        public async Task SetMessage(string user, string editorcontent, string imageload)
+        public async Task SetMessage(string user, string editorcontent, string? imageload)
         {
             var client = new HttpClient();
-            var data = new { username = user, message = editorcontent, image = imageload }; // Data to send
+            var data = new { username = user, message = editorcontent, image = imageload ?? string.Empty }; // Data to send
             var json = JsonConvert.SerializeObject(data); // Make the data Jason
             var content = new StringContent(json, Encoding.UTF8, "application/json"); // More Jason stuff
             await client.PostAsync("http://emko01.skp-dp.sde.dk/CSharpAPI_Test/index.php", content); // Post the data, declare API url
@@ -88,10 +87,7 @@ namespace MAUICHAT
         }
 
 
-        private async void OnTimedMessage(object source, ElapsedEventArgs e)
-        {
-            GetMessages();
-        }
+
     }
 
     public class Message
